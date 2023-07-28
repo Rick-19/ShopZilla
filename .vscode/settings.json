@@ -1,0 +1,5 @@
+{
+    "C_Cpp.errorSquiggles": "disabled",
+    "cmake.configureOnOpen": false,
+    "java.configuration.updateBuildConfiguration": "interactive"
+}
