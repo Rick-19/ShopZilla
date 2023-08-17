@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 class EditProductScreen extends StatefulWidget {
   static const routeName = '/edit-product';
-  const EditProductScreen({Key key}) : super(key: key);
+  const EditProductScreen({Key? key}) : super(key: key);
 
   @override
   State<EditProductScreen> createState() => _EditProductScreenState();
@@ -31,7 +31,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
     'title': '',
     'price': '',
   };
-
   var isLoading = false;
 
   @override
@@ -43,17 +42,19 @@ class _EditProductScreenState extends State<EditProductScreen> {
   @override
   void didChangeDependencies() {
     if (isInit) {
-      final productId = ModalRoute.of(context).settings.arguments as String;
+      final productId = ModalRoute.of(context)?.settings.arguments as String?;
       if (productId != null) {
         _editedProduct =
             Provider.of<Products>(context, listen: false).findById(productId);
         initValues = {
-          'title': _editedProduct.title,
-          'description': _editedProduct.description,
+          'title': _editedProduct.title ?? '',
+          'description': _editedProduct.description ?? '',
           'imageUrl': '',
-          'price': _editedProduct.price.toString(),
+          'price': _editedProduct.price != null
+              ? _editedProduct.price.toString()
+              : '0',
         };
-        _imageEditingController.text = _editedProduct.imageUrl;
+        _imageEditingController.text = _editedProduct.imageUrl ?? '';
       }
     }
     isInit = false;
@@ -67,17 +68,17 @@ class _EditProductScreenState extends State<EditProductScreen> {
   }
 
   Future<void> _saveform() async {
-    final isValid = _form.currentState.validate();
-    if (!isValid) return;
+    final isValid = _form.currentState?.validate();
+    if (isValid!) return;
     if (!_imageEditingController.text.startsWith('http') &&
         !_imageEditingController.text.startsWith('https')) return;
-    _form.currentState.save();
+    _form.currentState?.save();
     setState(() {
       isLoading = true;
     });
     if (_editedProduct.id != null) {
       await Provider.of<Products>(context, listen: false)
-          .updateProduct(_editedProduct.id, _editedProduct);
+          .updateProduct(_editedProduct.id!, _editedProduct);
     } else {
       try {
         await Provider.of<Products>(context, listen: false)
@@ -141,7 +142,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         labelText: 'Title',
                       ),
                       validator: (value) {
-                        if (value.isEmpty)
+                        if (value!.isEmpty)
                           return 'Please Provide a Value';
                         else
                           return null;
@@ -168,7 +169,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         labelText: 'Price',
                       ),
                       validator: (value) {
-                        if (double.parse(value) < 0)
+                        if (double.parse(value!) < 0)
                           return 'Value can\'t be Negative';
                         else if (double.parse(value) == 0)
                           return 'Value can\'t be zero';
@@ -184,7 +185,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           description: _editedProduct.description,
                           imageUrl: _editedProduct.imageUrl,
                           title: _editedProduct.title,
-                          price: double.parse(newValue),
+                          price: double.parse(newValue!),
                         );
                       },
                       keyboardType: TextInputType.number,
@@ -201,7 +202,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         labelText: 'Description',
                       ),
                       validator: (value) {
-                        if (value.isEmpty)
+                        if (value!.isEmpty)
                           return 'Please Enter a Description';
                         else if (value.length < 10)
                           return 'Description is Too Short';
@@ -260,7 +261,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                               _saveform();
                             },
                             validator: (value) {
-                              if (value.isEmpty)
+                              if (value!.isEmpty)
                                 return 'Enter a Url';
                               else if (!value.startsWith('http') &&
                                   !value.startsWith('https'))

@@ -11,7 +11,7 @@ import '../providers/products.dart';
 enum FilterOptions { Favourites, All }
 
 class ProdcutsOverviewScreen extends StatefulWidget {
-  ProdcutsOverviewScreen({Key key}) : super(key: key);
+  ProdcutsOverviewScreen({Key? key}) : super(key: key);
 
   @override
   State<ProdcutsOverviewScreen> createState() => _ProdcutsOverviewScreenState();
@@ -70,7 +70,7 @@ class _ProdcutsOverviewScreenState extends State<ProdcutsOverviewScreen> {
           ),
           Consumer<Cart>(
             builder: (_, cart, ch) => Badges(
-              child: ch,
+              child: ch!,
               value: cart.itemCount.toString(),
             ),
             child: IconButton(

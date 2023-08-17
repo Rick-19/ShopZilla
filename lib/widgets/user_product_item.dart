@@ -8,7 +8,7 @@ class UserProductItem extends StatelessWidget {
   final id;
   final imageUrl;
   final title;
-  const UserProductItem({Key key, this.imageUrl, this.title, this.id})
+  const UserProductItem({Key? key, this.imageUrl, this.title, this.id})
       : super(key: key);
 
   @override

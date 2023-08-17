@@ -5,7 +5,7 @@ import '../widgets/cart_items.dart';
 import '../providers/orders.dart';
 
 class CartScreen extends StatelessWidget {
-  const CartScreen({Key key}) : super(key: key);
+  const CartScreen({Key? key}) : super(key: key);
   static const routeName = '/cart-screen';
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class CartScreen extends StatelessWidget {
                       style: TextStyle(
                           color: Theme.of(context)
                               .primaryTextTheme
-                              .titleMedium
+                              .titleMedium!
                               .color),
                     ),
                     backgroundColor: Theme.of(context).primaryColor,
@@ -64,8 +64,8 @@ class CartScreen extends StatelessWidget {
 
 class OrderButton extends StatefulWidget {
   const OrderButton({
-    Key key,
-    @required this.cart,
+    Key? key,
+    required this.cart,
   }) : super(key: key);
 
   final Cart cart;

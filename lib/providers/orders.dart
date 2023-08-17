@@ -11,10 +11,10 @@ class OrderItem {
   DateTime dateTime;
 
   OrderItem(
-      {@required this.amount,
-      @required this.dateTime,
-      @required this.productId,
-      @required this.products});
+      {required this.amount,
+      required this.dateTime,
+      required this.productId,
+      required this.products});
 }
 
 class Orders with ChangeNotifier {
@@ -32,7 +32,7 @@ class Orders with ChangeNotifier {
   Future<void> fetchAndSetProduct() async {
     var url =
         "https://shopping-app-df65a-default-rtdb.firebaseio.com/orders/$userId.json?auth=$authToken";
-    var response = await http.get(url);
+    var response = await http.get(Uri.parse(url));
     List<OrderItem> loadedOrders = [];
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
     extractedData.forEach((orderId, orderData) {
@@ -62,7 +62,7 @@ class Orders with ChangeNotifier {
     var timeStamp = DateTime.now();
     var url =
         "https://shopping-app-df65a-default-rtdb.firebaseio.com/orders/$userId.json?auth=$authToken";
-    var response = await http.post(url,
+    var response = await http.post(Uri.parse(url),
         body: json.encode({
           'amount': amount,
           'dateTime': timeStamp.toIso8601String(),

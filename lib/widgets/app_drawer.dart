@@ -6,7 +6,7 @@ import '../screens/user_product_screen.dart';
 import '../providers/auth.dart';
 
 class AppDrawer extends StatelessWidget {
-  const AppDrawer({Key key}) : super(key: key);
+  const AppDrawer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -8,7 +8,7 @@ import './edit_procuct_screen.dart';
 
 class UserProductsScreen extends StatelessWidget {
   static const routeName = '/user-product';
-  const UserProductsScreen({Key key}) : super(key: key);
+  const UserProductsScreen({Key? key}) : super(key: key);
 
   Future<void> _refreshProducts(BuildContext context) async {
     await Provider.of<Products>(context, listen: false)

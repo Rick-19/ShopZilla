@@ -6,8 +6,8 @@ import 'package:intl/intl.dart';
 import '../providers/orders.dart' as ord;
 
 class OrderItem extends StatefulWidget {
-  final ord.OrderItem order;
-  const OrderItem({Key key, this.order}) : super(key: key);
+  final ord.OrderItem? order;
+  const OrderItem({Key? key, this.order}) : super(key: key);
 
   @override
   State<OrderItem> createState() => _OrderItemState();
@@ -20,14 +20,14 @@ class _OrderItemState extends State<OrderItem> {
     return AnimatedContainer(
       duration: Duration(milliseconds: 300),
       height:
-          _expanded ? min(widget.order.products.length * 20.0 + 110, 200) : 95,
+          _expanded ? min(widget.order!.products.length * 20.0 + 110, 200) : 95,
       child: Card(
         child: Column(
           children: [
             ListTile(
-              title: Text('₹${widget.order.amount.toStringAsFixed(2)}'),
+              title: Text('₹${widget.order!.amount.toStringAsFixed(2)}'),
               subtitle: Text(
-                DateFormat('dd-mm-yyyy hh:mm').format(widget.order.dateTime),
+                DateFormat('dd-mm-yyyy hh:mm').format(widget.order!.dateTime),
               ),
               trailing: IconButton(
                 onPressed: () {
@@ -42,11 +42,11 @@ class _OrderItemState extends State<OrderItem> {
               duration: Duration(milliseconds: 300),
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
               height: _expanded
-                  ? min(widget.order.products.length * 20.0 + 10, 100)
+                  ? min(widget.order!.products.length * 20.0 + 10, 100)
                   : 0,
               child: ListView(
                 children: [
-                  ...widget.order.products
+                  ...widget.order!.products
                       .map((prod) => Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

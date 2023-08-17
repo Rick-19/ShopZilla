@@ -3,20 +3,20 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Product with ChangeNotifier {
-  final String title;
-  final String id;
-  final String description;
-  final double price;
-  final String imageUrl;
+  final String? title;
+  final String? id;
+  final String? description;
+  final double? price;
+  final String? imageUrl;
   bool isFavourite;
 
   Product({
-    @required this.id,
-    @required this.description,
-    @required this.imageUrl,
+    required this.id,
+    required this.description,
+    required this.imageUrl,
     this.isFavourite = false,
-    @required this.title,
-    @required this.price,
+    required this.title,
+    required this.price,
   });
 
   void setFavVal(bool oldStatus) {
@@ -31,7 +31,7 @@ class Product with ChangeNotifier {
     var url =
         "https://shopping-app-df65a-default-rtdb.firebaseio.com/products/$id.json?auth=$authToken";
     try {
-      var response = await http.patch(url,
+      var response = await http.patch(Uri.parse(url),
           body: json.encode({
             'isFavorite': isFavourite,
           }));

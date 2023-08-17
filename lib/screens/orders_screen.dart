@@ -7,14 +7,14 @@ import '../widgets/app_drawer.dart';
 
 class OrdersScreen extends StatefulWidget {
   static const routeName = '/orders';
-  const OrdersScreen({Key key}) : super(key: key);
+  const OrdersScreen({Key? key}) : super(key: key);
 
   @override
   State<OrdersScreen> createState() => _OrdersScreenState();
 }
 
 class _OrdersScreenState extends State<OrdersScreen> {
-  Future _ordersFuture;
+  Future? _ordersFuture;
 
   Future fetchAndSet() {
     return Provider.of<Orders>(context, listen: false).fetchAndSetProduct();

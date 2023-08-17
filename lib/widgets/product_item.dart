@@ -23,10 +23,10 @@ class ProductItem extends StatelessWidget {
             );
           },
           child: Hero(
-            tag: product.id,
+            tag: product.id!,
             child: FadeInImage(
               placeholder: AssetImage('assets/images/product-placeholder.png'),
-              image: NetworkImage(product.imageUrl),
+              image: NetworkImage(product.imageUrl!),
             ),
           ),
         ),
@@ -34,7 +34,7 @@ class ProductItem extends StatelessWidget {
           leading: Consumer<Product>(
             builder: (context, product, _) => IconButton(
               onPressed: () {
-                product.toggleFavourite(auth.token);
+                product.toggleFavourite(auth.token!);
               },
               icon: Icon(
                 product.isFavourite ? Icons.favorite : Icons.favorite_outline,
@@ -43,12 +43,12 @@ class ProductItem extends StatelessWidget {
             ),
           ),
           title: Text(
-            product.title,
+            product.title!,
             textAlign: TextAlign.center,
           ),
           trailing: IconButton(
             onPressed: () {
-              cart.addItems(product.id, product.title, product.price);
+              cart.addItems(product.id!, product.title!, product.price!);
               ScaffoldMessenger.of(context).hideCurrentSnackBar();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -57,7 +57,7 @@ class ProductItem extends StatelessWidget {
                   action: SnackBarAction(
                       label: 'UNDO',
                       onPressed: () {
-                        cart.undoCartItem(product.id);
+                        cart.undoCartItem(product.id!);
                       }),
                 ),
               );

@@ -3,13 +3,18 @@ import 'package:provider/provider.dart';
 import '../providers/cart.dart';
 
 class CartItem extends StatelessWidget {
-  final String productId;
-  final String title;
-  final int quantity;
-  final double price;
-  final String id;
+  final String? productId;
+  final String? title;
+  final int? quantity;
+  final double? price;
+  final String? id;
   const CartItem(
-      {Key key, this.id, this.price, this.quantity, this.title, this.productId})
+      {Key? key,
+      this.id,
+      this.price,
+      this.quantity,
+      this.title,
+      this.productId})
       : super(key: key);
 
   @override
@@ -17,7 +22,7 @@ class CartItem extends StatelessWidget {
     return Dismissible(
       key: ValueKey(id),
       onDismissed: (direction) {
-        Provider.of<Cart>(context, listen: false).removeItem(productId);
+        Provider.of<Cart>(context, listen: false).removeItem(productId!);
       },
       background: Container(
         margin: EdgeInsets.symmetric(
@@ -67,8 +72,8 @@ class CartItem extends StatelessWidget {
               child: Padding(
                   padding: EdgeInsets.all(4),
                   child: FittedBox(child: Text('₹${price}')))),
-          title: Text(title),
-          subtitle: Text('₹${(price * quantity).toStringAsFixed(2)}'),
+          title: Text(title!),
+          subtitle: Text('₹${(price! * quantity!).toStringAsFixed(2)}'),
           trailing: Text('$quantity x'),
         ),
       ),

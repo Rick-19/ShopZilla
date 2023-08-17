@@ -86,7 +86,7 @@ class AuthScreen extends StatelessWidget {
 
 class AuthCard extends StatefulWidget {
   const AuthCard({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -104,9 +104,9 @@ class _AuthCardState extends State<AuthCard>
   var _isLoading = false;
   final _passwordController = TextEditingController();
 
-  AnimationController _controller;
-  Animation<double> _opacityAnimation;
-  Animation<Offset> _slideAnimation;
+  AnimationController? _controller;
+  Animation<double>? _opacityAnimation;
+  Animation<Offset>? _slideAnimation;
 
   @override
   void initState() {
@@ -117,17 +117,17 @@ class _AuthCardState extends State<AuthCard>
     );
     _slideAnimation =
         Tween<Offset>(begin: Offset(0, -0.3), end: Offset(0, 0)).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+      CurvedAnimation(parent: _controller!, curve: Curves.easeInOut),
     );
     //_heightAnimation.addListener(() => setState(() {}));
     _opacityAnimation = Tween(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+      CurvedAnimation(parent: _controller!, curve: Curves.easeInOut),
     );
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller?.dispose();
     super.dispose();
   }
 
@@ -152,23 +152,23 @@ class _AuthCardState extends State<AuthCard>
   }
 
   Future<void> _submit() async {
-    if (!_formKey.currentState.validate()) {
+    if (!_formKey.currentState!.validate()) {
       // Invalid!
       return;
     }
-    _formKey.currentState.save();
+    _formKey.currentState!.save();
     setState(() {
       _isLoading = true;
     });
     try {
       if (_authMode == AuthMode.Login) {
         await Provider.of<Auth>(context, listen: false)
-            .login(_authData['email'], _authData['password']);
+            .login(_authData['email']!, _authData['password']!);
         // Log user in
       } else {
         // Sign user up
         await Provider.of<Auth>(context, listen: false)
-            .signUp(_authData['email'], _authData['password']);
+            .signUp(_authData['email']!, _authData['password']!);
       }
     } on HttpException catch (error) {
       var errorMessage = 'Authentication failed!';
@@ -198,12 +198,12 @@ class _AuthCardState extends State<AuthCard>
       setState(() {
         _authMode = AuthMode.Signup;
       });
-      _controller.forward();
+      _controller?.forward();
     } else {
       setState(() {
         _authMode = AuthMode.Login;
       });
-      _controller.reverse();
+      _controller?.reverse();
     }
   }
 
@@ -235,13 +235,13 @@ class _AuthCardState extends State<AuthCard>
                   decoration: InputDecoration(labelText: 'E-Mail'),
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
-                    if (value.isEmpty || !value.contains('@')) {
+                    if (value!.isEmpty || !value.contains('@')) {
                       return 'Invalid email!';
                     }
                     return null;
                   },
                   onSaved: (value) {
-                    _authData['email'] = value;
+                    _authData['email'] = value!;
                   },
                 ),
                 TextFormField(
@@ -249,13 +249,13 @@ class _AuthCardState extends State<AuthCard>
                   obscureText: true,
                   controller: _passwordController,
                   validator: (value) {
-                    if (value.isEmpty || value.length < 5) {
+                    if (value!.isEmpty || value.length < 5) {
                       return 'Password is too short!';
                     }
                     return null;
                   },
                   onSaved: (value) {
-                    _authData['password'] = value;
+                    _authData['password'] = value!;
                   },
                 ),
                 AnimatedContainer(
@@ -265,9 +265,9 @@ class _AuthCardState extends State<AuthCard>
                   curve: Curves.easeInOut,
                   duration: Duration(milliseconds: 300),
                   child: FadeTransition(
-                    opacity: _opacityAnimation,
+                    opacity: _opacityAnimation!,
                     child: SlideTransition(
-                      position: _slideAnimation,
+                      position: _slideAnimation!,
                       child: TextFormField(
                         enabled: _authMode == AuthMode.Signup,
                         decoration:
@@ -301,7 +301,7 @@ class _AuthCardState extends State<AuthCard>
                     padding:
                         EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
                     color: Theme.of(context).primaryColor,
-                    textColor: Theme.of(context).primaryTextTheme.button.color,
+                    textColor: Theme.of(context).primaryTextTheme.button?.color,
                   ),
                 TextButton(
                   child: Text(

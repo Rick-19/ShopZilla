@@ -7,10 +7,10 @@ class CartItem {
   int quantity;
 
   CartItem({
-    @required this.id,
-    @required this.price,
-    @required this.quantity,
-    @required this.title,
+    required this.id,
+    required this.price,
+    required this.quantity,
+    required this.title,
   });
 }
 
@@ -60,8 +60,8 @@ class Cart with ChangeNotifier {
   }
 
   void undoCartItem(String productId) {
-    if (!_items.containsKey(productId)) return;
-    if (_items[productId].quantity > 1)
+    if (_items.containsKey(productId)) return;
+    if (_items[productId]!.quantity > 1)
       _items.update(
         productId,
         (existingCartItem) => CartItem(

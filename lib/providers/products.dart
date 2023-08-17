@@ -42,7 +42,7 @@ class Products with ChangeNotifier {
   ];
 
   final String authToken;
-  final String userId;
+  final String? userId;
 
   Products(this.authToken, this._items, this.userId);
 
@@ -74,7 +74,7 @@ class Products with ChangeNotifier {
     final url =
         'https://shopping-app-df65a-default-rtdb.firebaseio.com/products.json?auth=$authToken&$filterProducts';
     try {
-      var response = await http.get(url);
+      var response = await http.get(Uri.parse(url));
       var extractedData = json.decode(response.body) as Map<String, dynamic>;
       List<Product> loadedProduct = [];
       extractedData.forEach((prodId, prodData) {
@@ -101,7 +101,7 @@ class Products with ChangeNotifier {
         "https://shopping-app-df65a-default-rtdb.firebaseio.com/products.json?auth=$authToken";
     try {
       var response = await http.post(
-        url,
+        Uri.parse(url),
         body: json.encode(
           {
             'title': product.title,
@@ -132,7 +132,7 @@ class Products with ChangeNotifier {
     final url =
         "https://shopping-app-df65a-default-rtdb.firebaseio.com/products/$id.json?auth=$authToken";
     if (prodIndex >= 0) {
-      await http.patch(url,
+      await http.patch(Uri.parse(url),
           body: json.encode({
             'title': newProd.title,
             'description': newProd.description,
@@ -150,10 +150,10 @@ class Products with ChangeNotifier {
     var url =
         "https://shopping-app-df65a-default-rtdb.firebaseio.com/products/$id.json?auth=$authToken";
     var existingIndex = _items.indexWhere((element) => element.id == id);
-    var existingProduct = _items[existingIndex];
+    Product? existingProduct = _items[existingIndex];
     _items.removeAt(existingIndex);
     notifyListeners();
-    var response = await http.delete(url);
+    var response = await http.delete(Uri.parse(url));
     if (response.statusCode >= 400) {
       _items.insert(existingIndex, existingProduct);
       notifyListeners();
