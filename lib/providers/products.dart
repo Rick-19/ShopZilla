@@ -83,7 +83,7 @@ class Products with ChangeNotifier {
             id: prodId,
             title: prodData['title'],
             description: prodData['description'],
-            price: prodData['price'],
+            price: prodData['price'].toDouble(),
             imageUrl: prodData['imageUrl'],
             isFavourite: prodData['isFavorite'],
           ),

@@ -69,7 +69,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
   Future<void> _saveform() async {
     final isValid = _form.currentState?.validate();
-    if (isValid!) return;
+    if (isValid == null) return;
     if (!_imageEditingController.text.startsWith('http') &&
         !_imageEditingController.text.startsWith('https')) return;
     _form.currentState?.save();

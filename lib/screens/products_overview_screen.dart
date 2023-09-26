@@ -44,7 +44,7 @@ class _ProdcutsOverviewScreenState extends State<ProdcutsOverviewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('MyShop'),
+        title: Text('ShopZilla'),
         actions: [
           PopupMenuButton(
             itemBuilder: (context) => [
